@@ -15,9 +15,9 @@ articles.author group by authors.name order by views desc;"
 
 """ 3. On which days did more than 1 percent of requests lead to errors"""
 
-query3 = "select hits.date, count(*) as high_errors from hits, errors \
-where hits.date = errors.date and errors.errors > (0.01 * hits.hits) \
-group by hits.date;"
+query3 = "select errors.date, ROUND(errors.errors*100/hits.hits::numeric, \
+2) as percentage_of_errors from errors, hits where errors.date = hits.date \
+and (errors.errors*100/hits.hits::numeric) >= 1;"
 
 
 def get_top_articles():
@@ -26,8 +26,15 @@ def get_top_articles():
     c.execute(query1)
     result = c.fetchall()
     db.close
-    return result
+    x = result[0][0] + " - " + str(result[0][1])
+    y = result[1][0] + " - " + str(result[1][1])
+    z = result[2][0] + " - " + str(result[2][1])
+    print(x)
+    print(y)
+    print(z)
+    return ""
 
+print("Top 3 Articles by Views")
 print(get_top_articles())
 
 
@@ -37,8 +44,17 @@ def get_top_authors():
     c.execute(query2)
     result = c.fetchall()
     db.close
-    return result
+    x = result[0][0] + " - " + str(result[0][1])
+    y = result[1][0] + " - " + str(result[1][1])
+    z = result[2][0] + " - " + str(result[2][1])
+    zz = result[3][0] + " - " + str(result[3][1])
+    print(x)
+    print(y)
+    print(z)
+    print(zz)
+    return ""
 
+print("Top Authors by Article Views")
 print(get_top_authors())
 
 
@@ -48,6 +64,7 @@ def get_errors():
     c.execute(query3)
     result = c.fetchall()
     db.close
-    return result
+    return str(result[0][0]) + " - " + str(result[0][1]) + "% errors"
 
+print("Days with Over 1% page view errors")
 print(get_errors())
