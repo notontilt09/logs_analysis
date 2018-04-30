@@ -34,6 +34,7 @@ def get_top_articles():
     print(z)
     return ""
 
+
 print("Top 3 Articles by Views")
 print(get_top_articles())
 
@@ -54,6 +55,7 @@ def get_top_authors():
     print(zz)
     return ""
 
+
 print("Top Authors by Article Views")
 print(get_top_authors())
 
@@ -65,6 +67,7 @@ def get_errors():
     result = c.fetchall()
     db.close
     return str(result[0][0]) + " - " + str(result[0][1]) + "% errors"
+
 
 print("Days with Over 1% page view errors")
 print(get_errors())
