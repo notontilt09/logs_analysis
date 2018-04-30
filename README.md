@@ -15,10 +15,13 @@ Two views were created in psql to make the queries a bit easier to digest.
 ### Errors View
 ```create view errrs as select date(time), count(*) as errors
 from log where status = '404 NOT FOUND'
-group by date;```
+group by date;
+```
 
 This view creates a table of total errors in navigating the website grouped by day
 
 ### Hits View
 ```create view hits as select date(time), count(*) as hits
 from log group by date;```
+
+This view creates a table of total hits by day
